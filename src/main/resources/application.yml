@@ -1,0 +1,36 @@
+
+
+elastic-job:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Leader8233
+    url: jdbc:mysql://127.0.0.1:3306/elastic_job?autoReconnect=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    type: com.alibaba.druid.pool.DruidDataSource
+#    type: org.apache.commons.dbcp2.BasicDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    filters: stat,wall,log4j
+    logSlowSql: true
+
+  registry-center:
+    address: 127.0.0.1:2181
+    namespace: elastic-job
+
+  task:
+    test:
+      cron: 0/5 * * * * ?
+      #作业分片总数
+      shardingTotalCount: 3
+      shardingItemParameters: 0=Beijing,1=Shanghai,2=Guangzhou
+      description: 描述
+server:
+  port: 8081
